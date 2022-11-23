@@ -146,21 +146,32 @@ p merge([5,2,7,3,1,9])
 # subsets([1, 2, 3]) # => [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]
 
 
-def permutations(array)
-    return array[0] if array.length == 1
+# def permutations(array)
+#     return array[0] if array.length == 1
 
-    perm_arr = []
-    prv_1 = (array.length + 1) % array.length * -1
-    prv_2 = (array.length + 2) % array.length * -1
-    array.each do |ele|
-        (0...array.length).each do |i|
-            if ele != array[i]
-                perm_arr << permutations([array[i - prv_1], array[i - prv_2]])
-            end
-        end
-    end
-    perm_arr
-end
-p permutations([1, 2, 3]) # => [[1, 2, 3], [1, 3, 2],
+#     perm_arr = []
+#     prv_1 = (array.length + 1) % array.length * -1
+#     prv_2 = (array.length + 2) % array.length * -1
+#     array.each do |ele|
+#         (0...array.length).each do |i|
+#             if ele != array[i]
+#                 perm_arr << permutations([array[i - prv_1], array[i - prv_2]])
+#             end
+#         end
+#     end
+#     perm_arr
+# end
+# p permutations([1, 2, 3]) # => [[1, 2, 3], [1, 3, 2],
                         #     [2, 1, 3], [2, 3, 1],
                         #     [3, 1, 2], [3, 2, 1]]
+    
+
+    def permutations(array)
+        factorial = array.length
+
+        (1...array.length).each { |num| factorial *= num }
+        factorial
+
+    end
+    
+    p permutations([3,4,5])
