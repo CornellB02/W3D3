@@ -27,3 +27,32 @@ p exp(2, 2)
 p exp(2, 3)
 p exp(2, 4)
 p exp(2, 5)
+
+
+class Array 
+
+
+    def deep_dup
+        return self.dup if is_a?(self) == false
+
+        temp = []
+        self.each do |ele|
+            if ele.is_a?
+            temp << ele.deep_dup
+            else 
+                temp << ele.dup
+            end
+        end
+        temp
+    end
+
+    nums = [1, [2], [3, [4]]]
+
+    p nums.deep_dup
+
+    
+
+    
+end
+
+
