@@ -31,28 +31,77 @@ p exp(2, 5)
 
 class Array 
 
-
     def deep_dup
-        return self.dup if is_a?(self) == false
+        return self if is_a?(Array) == false
 
         temp = []
         self.each do |ele|
-            if ele.is_a?
-            temp << ele.deep_dup
+            if ele.is_a?(Array)
+                temp << ele.deep_dup
             else 
-                temp << ele.dup
+                temp << ele
             end
         end
         temp
     end
 
     nums = [1, [2], [3, [4]]]
+    p nums_copy = nums.deep_dup    
 
-    p nums.deep_dup
-
-    
-
-    
+    nums_copy[1] << 1
+    p nums
+    p nums_copy
 end
 
 
+def fib(n)
+    return [] if n == 0
+    return [1] if n == 1
+    return [1, 1] if n == 2
+    fib_arr = fib(n-1)
+
+    fib_arr << fib_arr[-1] + fib_arr[-2]
+end
+p fib(14)
+p fib(8)
+
+def iter_fib(n)
+    return [] if n == 0
+    return [1] if n == 1
+    fib_arr = [1, 1]
+    return fib_arr if n == 2
+    
+    while fib_arr.length < n
+        fib_arr << fib_arr[-1] + fib_arr[-2]
+    end
+    fib_arr
+end
+p iter_fib(14)
+p iter_fib(8)
+
+def bsearch(array, target)
+    return nil if array.length == 1 && array[0] != target
+
+    mid = array.length / 2
+    left = array[0...mid]
+    right = array[mid..-1]
+
+    if target < array[mid]
+        bsearch(left, target)
+    elsif target > array[mid]
+        if bsearch(right, target) != nil
+            mid + bsearch(right, target)
+        else
+            nil
+        end
+    else
+        return mid
+    end
+end
+p bsearch([1, 2, 3], 1) # => 0
+p bsearch([2, 3, 4, 5], 3) # => 1
+p bsearch([2, 4, 6, 8, 10], 6) # => 2
+p bsearch([1, 3, 4, 5, 9], 5) # => 3
+p bsearch([1, 2, 3, 4, 5, 6], 6) # => 5
+p bsearch([1, 2, 3, 4, 5, 6], 0) # => nil
+p bsearch([1, 2, 3, 4, 5, 7], 6) # => nil
